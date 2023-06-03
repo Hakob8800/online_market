@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+</head>
+<body>
+
+<table border="1px">
+    <tr>
+        <th>id</th>
+        <th>title</th>
+        <th>price</th>
+        <th>description</th>
+        <th>category</th>
+        <th>image</th>
+    </tr>
+    <tr th:each="prod:${products}">
+        <td th:text="${prod.id}"></td>
+        <td th:text="${prod.title}"></td>
+        <td th:text="${prod.price}"></td>
+        <td th:text="${prod.description}"></td>
+        <td th:text="${prod.getCategory().name}"></td>
+        <td><img th:src="@{/getImg(image = ${prod.getImgPath()})}" width="400"></td>
+    </tr>
+</table>
+
+Create new products
+<form action="products/add" method="post" enctype="multipart/form-data"><br>
+    title:<input type="text" name="title"><br>
+    description:<input type="text" name="description"><br>
+    price:<input type="number" name="price"><br>
+    Category:<select name="category">
+
+    <option name="category.id" th:each="cat : ${categories}"
+            th:text="${cat.name}" th:value="${cat.id}"></option>
+             </select><br>
+    image:<input type="file" name="image"><br>
+    <input type="submit" value="add new products">
+</form>
+
+</body>
+</html>
